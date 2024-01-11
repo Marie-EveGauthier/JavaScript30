@@ -74,34 +74,41 @@
   </style>
 
   <script>
+
+    const transitionFormat = 'all 0.05s cubic-bezier(0.1, 2.7, 0.58, 1)';
     const secondHand = document.querySelector('.second-hand');
     const minuteHand = document.querySelector('.min-hand');
     const hourHand = document.querySelector('.hour-hand');
 
+    // @bug animation when rotate() resets from 450deg to 90deg
+    // element rotates unexpectedly before it comes back quickly to it's right position
+    function animateHand(time, hand, degree) {
+      // @fix remove transition @ time = 0 before degree resets from 450 to 90
+      if (time === 0) {
+        hand.style.transition = 'none';
+      } else {
+        hand.style.transition = transitionFormat;
+      }
+      hand.style.transform = `rotate(${degree}deg)`;
+    }
+
     function setDate() {
       const now = new Date()
+
       const seconds = now.getSeconds()
       const minutes = now.getMinutes()
       const hours = now.getHours()
 
-      const secondsDegrees = seconds / 60 * 360 + 90
-      const minutesDegrees = minutes / 60 * 360 + 90
-      const hoursDegrees = hours / 12 * 360 + 90
+
+      const secondsDegrees = (seconds / 60 * 360) + 90
+      const minutesDegrees = (minutes / 60 * 360) + 90
+      const hoursDegrees = (hours / 12 * 360) + 90
+
+      animateHand(seconds, secondHand, secondsDegrees)
+      animateHand(minutes, minuteHand, minutesDegrees)
+      animateHand(hours, hourHand, hoursDegrees)
 
 
-      secondHand.style.transform = `rotate(${secondsDegrees}deg)`
-      minuteHand.style.transform = `rotate(${minutesDegrees}deg)`
-      hourHand.style.transform = `rotate(${hoursDegrees}deg)`
-
-      if (secondsDegrees == 360) {
-        secondHand.style.transition = 'none'
-      }
-      if (minutesDegrees === 360) {
-        minutedHand.style.transition = 'none'
-      }
-      if (hoursDegrees === 360) {
-        hourHand.style.transition = 'none'
-      }
     }
 
     setInterval(setDate, 1000)
@@ -110,3 +117,5 @@
 </body>
 
 </html>
+
+<!-- solution from https://github.com/wesbos/JavaScript30/pull/501/files -->
