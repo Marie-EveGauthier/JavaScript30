@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Hold Shift to Check Multiple Checkboxes</title>
   <link rel="icon" href="https://fav.farm/🔥" />
 </head>
+
 <body>
   <style>
-
     html {
       font-family: sans-serif;
       background: #ffc600;
@@ -18,7 +19,7 @@
       margin: 50px auto;
       background: white;
       border-radius: 5px;
-      box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
+      box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.1);
     }
 
     .item {
@@ -31,7 +32,7 @@
       border-bottom: 0;
     }
 
-    input:checked + p {
+    input:checked+p {
       background: #F9F9F9;
       text-decoration: line-through;
     }
@@ -45,13 +46,13 @@
       padding: 20px;
       transition: background 0.2s;
       flex: 1;
-      font-family:'helvetica neue';
+      font-family: 'helvetica neue';
       font-size: 20px;
       font-weight: 200;
       border-left: 1px solid #D1E2FF;
     }
   </style>
-   <!--
+  <!--
    The following is a common layout you would see in an email client.
 
    When a user clicks a checkbox, holds Shift, and then clicks another checkbox a few rows down, all the checkboxes inbetween those two checkboxes should be checked.
@@ -96,7 +97,71 @@
     </div>
   </div>
 
-<script>
-</script>
+  <script>
+
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]')
+    console.log(checkboxes)
+    let first
+    let isShiftHeld = false
+
+    // function markAsChecked(evt) {
+    //   if (!evt.target.checked) {
+    //     return
+    //   }
+    //   console.log(this.checked)
+    //   console.log("this", this)
+    //   console.log('event', event)
+    // }
+
+    // checkboxes.forEach((checkbox, currentIndex) => {
+    //   checkbox.addEventListener('change', markAsChecked)
+    // })
+    // NOT A GOOD IDEA because it's not so easy and clean to pass the index of this checkbox
+
+
+    for (let i = 0; i < checkboxes.length; i++) {
+      checkboxes[i].addEventListener('change', () => {
+        const isChecked = checkboxes[i].checked
+        console.log({ isChecked })
+        console.log({ isShiftHeld })
+
+
+        if (first >= 0 && isShiftHeld) {
+          console.log('index of previous item clicked ', first)
+          console.log('currentIndex', i)
+
+          if (first < i) {
+            for (let j = first; j < i + 1; j++) {
+              checkboxes[j].checked = true
+            }
+          } else {
+            for (let j = i; j < first + 1; j++) {
+              checkboxes[j].checked = true
+            }
+
+          }
+        }
+
+        if (isChecked) {
+          first = i
+        }
+
+        isShiftHeld = false
+      })
+    }
+
+    function toggleShift(e) {
+      console.log(e)
+      if (e.keyCode === 16) {
+        isShiftHeld = true
+      } else {
+        isShiftHeld = false
+      }
+    }
+
+
+    window.addEventListener('keydown', toggleShift)
+  </script>
 </body>
+
 </html>
