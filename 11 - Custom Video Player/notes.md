@@ -34,8 +34,18 @@ How to style the input to change the background-color depending of the value sel
 
 #### Video element
 
-- the only attribute is `video.paused`
-- attributes _playing_ or stopped_ don't exist
+- the only _attribute_ related to the state of the `video` is `paused`
+- attributes _playing_ or _stopped_ don't exist
+- otherwise, `video` has the _events_ `play` and `pause`
+```
+  function handlePlayButton() {
+  if (video.paused) {
+    video.play
+  } else {
+    video.pause()
+  }
+}
+```
 
 
 #### Modify html in javascript
