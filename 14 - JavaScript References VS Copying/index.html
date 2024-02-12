@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>JS Reference VS Copy</title>
-  <link rel="icon" href="https://fav.farm/✅" />
+  <link rel="icon" href="https://fav.farm/🖨️" />
 </head>
+
 <body>
 
   <script>
@@ -29,10 +31,10 @@
 
     console.log(players, team);
     // You might think we can just do something like this:
-    // team[3] = 'Lux';
+    team[3] = 'Marie';
 
     // however what happens when we update that array?
-
+    console.log(players, team)
     // now here is the problem!
 
     // oh no - we have edited the original array too!
@@ -70,11 +72,12 @@
 
     // how do we take a copy instead?
     const cap2 = Object.assign({}, person, { number: 99, age: 12 });
-    console.log(cap2);
+    console.log({ person, cap2 });
 
     // We will hopefully soon see the object ...spread
-    // const cap3 = {...person};
-
+    // Update it is!
+    const cap3 = { ...person };
+    console.log('cap3::::', cap3)
     // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
 
     const wes = {
@@ -93,8 +96,16 @@
 
     const dev2 = JSON.parse(JSON.stringify(wes));
 
+    const wes2 = Object.assign({}, wes);
+    wes2.social.twitter = '@coolwes'
+
+    console.log(wes.social) // {twitter: '@coolwes', facebook: 'wesbos.developer'}
+
+    console.log(wes2.social) // {twitter: '@coolwes', facebook: 'wesbos.developer'}
+
 
   </script>
 
 </body>
+
 </html>
