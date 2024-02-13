@@ -53,9 +53,9 @@
       // If the element that is the current target of the event differs from the event's originating target,
       // increment the values of the two previously declared variables
       // by the distance between the originating target and the current target on both axis
-      if (this !== e.target) {
-        x = x + e.target.offsetLeft;
-        y = y + e.target.offsetTop;
+      if (this !== evt.target) {
+        x = x + evt.target.offsetLeft;
+        y = y + evt.target.offsetTop;
       }
 
       if (this !== evt.target) { // this =  the element on which we listen AND target = the element that is actually triggered on
