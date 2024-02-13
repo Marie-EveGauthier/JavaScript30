@@ -2,6 +2,8 @@
 
 ### Topics covered
 - `contenteditable`
+- offset...
+- `this` vs `event.target`
 
 
 ### contenteditable
