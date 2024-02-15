@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Videos</title>
-  <link rel="icon" href="https://fav.farm/🔥" />
+  <link rel="icon" href="https://fav.farm/⏱️" />
 </head>
+
 <body>
   <ul class="videos">
     <li data-time="5:43">
@@ -182,7 +184,25 @@
       Video 58
     </li>
   </ul>
-<script>
-</script>
+  <script>
+    const videos = Array.from(document.querySelectorAll('li'))
+    const seconds = videos
+      .map(video => video.dataset.time)
+      .map(time => {
+        [mins, secs] = time.split(':')
+          .map(parseFloat) // transform string in number
+        return (mins * 60) + secs // convert all in seconds
+      })
+      .reduce((total, currentSeconds) => total + currentSeconds)
+
+    let secondsLeft = seconds
+    const hours = Math.floor(secondsLeft / 3600)
+    secondsLeft = secondsLeft % 3600
+    const minutes = Math.floor(secondsLeft / 60)
+    secondsLeft = secondsLeft % 60
+
+    console.table({ hours, minutes, secondsLeft })
+  </script>
 </body>
+
 </html>
